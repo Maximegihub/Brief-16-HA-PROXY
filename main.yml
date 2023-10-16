@@ -1,0 +1,28 @@
+---
+- name: Install HAProxy
+  apt:
+    name: haproxy
+    state: present
+
+- name: Configure HAProxy
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+  notify: Restart HAProxy
+
+- name: Ensure HAProxy service is enabled and running
+  service:
+    name: haproxy
+    state: started
+    enabled: yes
+
+- name: Enable HAProxy in the firewall
+  ufw:
+    rule: allow
+    port: 80
+    proto: tcp
+
+- name: Restart HAProxy
+  service:
+    name: haproxy
+    state: restarted

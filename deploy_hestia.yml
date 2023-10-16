@@ -1,0 +1,38 @@
+---
+- name: Deploy Hestia Control Panel
+  hosts: hestia_server
+  become: yes
+  tasks:
+    - name: Instalation des dépendances
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - curl
+        - gnupg
+        - ca-certificates
+        - software-properties-common
+
+    - name: Ajouter la clé gpg de hestia
+      shell: curl https://apt.hestiacp.com/gpg.key | apt-key add -
+      
+    - name: Ajouter le repository hestia
+      apt_repository:
+        repo: deb https://apt.hestiacp.com/debian/ hestia main
+        state: present
+        filename: 'hestia'
+
+    - name: Mettre à jour le cache apt
+      apt:
+        update_cache: yes
+
+    - name: Installer Hestia
+      apt:
+        name: hestia
+        state: present
+
+    - name: Démarrer le service hetia
+      service:
+        name: hestia
+        state: started
+        enabled: yes
