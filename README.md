@@ -1,5 +1,5 @@
 # Brief-16-HA-PROXY
-HA PROXY WITH ANSIBLE
+HA PROXY ET HESTIA AVEC ANSIBLE
 
 - Installer ANSIBLE
 - Créer votre fichier de configuration
