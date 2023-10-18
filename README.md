@@ -8,6 +8,6 @@ HA PROXY WITH ANSIBLE
 ansible-galaxy init haproxy_role 
 - Créer le playbook HAPROXY (haproxy.cfg.j2)
 - Créer le playbook HESTIA (deploy_hestia.yml)
-- Déployer votre playbook
-  ansible-playbook -i inventory.ini deploy_haproxy.yml
-  ansible-playbook -i inventory.ini deploy_hestia.yml
+- Déployer vos playbooks
+  - ansible-playbook -i inventory.ini deploy_haproxy.yml
+  - ansible-playbook -i inventory.ini deploy_hestia.yml
