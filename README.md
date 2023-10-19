@@ -1,5 +1,5 @@
 # Brief-16-HA-PROXY
-DEPLOIEMENT DE HA PROXY ET HESTIA AVEC ANSIBLE VIA CLE SSH
+DEPLOIEMENT DE HA PROXY ET HESTIA AVEC ANSIBLE VIA CLE SSH (ssh-copy-id -i ~/.ssh/id_rsa.pub user@ip)
 # Installer ANSIBLE :
 - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
 - sudo apt install gnupg2
