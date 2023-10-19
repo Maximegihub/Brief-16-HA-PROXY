@@ -1,0 +1,51 @@
+---
+- name: Déployer HAProxy avec UFW
+  hosts: debian
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Mise à jour du cache des paquets
+      apt:
+        update_cache: yes
+
+    - name: Installation de HAProxy
+      apt:
+        name: haproxy
+        state: present
+
+    - name: Configuration de HAProxy
+      template:
+        src: haproxy.cfg.j2
+        dest: /etc/haproxy/haproxy.cfg
+      notify:
+        - Redémarrage HAProxy
+
+    - name: Installation de UFW
+      apt:
+        name: ufw
+        state: present
+
+    - name: Autoriser les ports 80, 443, 53, 22
+      command: ufw allow {{ item }}
+      with_items:
+        - 80
+        - 443
+        - 53
+        - 22
+
+    - name: Activer UFW
+      command: ufw --force enable
+
+    - name: Recharger UFW
+      command: ufw reload
+
+  handlers:
+    - name: Redémarrage HAProxy
+      service:
+        name: haproxy
+        state: restarted
+
+    - name: Status du service HAProxy
+      service:
+        name: haproxy
+        state: status
