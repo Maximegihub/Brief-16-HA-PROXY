@@ -1,6 +1,0 @@
----
-- name: Deploy HAProxy Load Balancer
-  hosts: debian_servers
-  become: yes
-  roles:
-    - haproxy_role
