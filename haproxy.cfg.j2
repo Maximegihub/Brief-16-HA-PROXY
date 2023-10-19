@@ -1,34 +1,32 @@
 global
-    log 127.0.0.1 local0
-    log 127.0.0.1 local1 notice
+    log /dev/log local0
+    log /dev/log local1 notice
     maxconn 4096
     user haproxy
     group haproxy
-    daemon
 
 defaults
-    log global
-    mode http
-    option httplog
-    option dontlognull
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
     retries 3
-    option redispatch
-    maxconn 2000
+    option  redispatch
     timeout connect 5000
-    timeout client 50000
-    timeout server 50000
+    timeout client  50000
+    timeout server  50000
 
-frontend http-in
+frontend web
     bind *:80
-    default_backend servers
+    default_backend app_servers
 
-backend servers
+backend app_servers
     mode http
     balance roundrobin
     cookie SERVERID insert indirect nocache
-    server server1 IP_VM_1:80 check
-    server server2 IP_VM_2:80 check
-    server server3 IP_VM_3:80 check
+    server deb1 192.168.50.180:80 check
+    server deb2 192.168.50.181:80 check
+    server deb3 192.168.50.182:80 check
 
 listen stats
     bind :1936
